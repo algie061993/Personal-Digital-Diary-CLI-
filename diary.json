@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "date": "5/28/2026",
+    "timestamp": "2026-05-28T11:16:05.733Z",
+    "entry": "my first diary"
+  },
+  {
+    "id": 3,
+    "date": "5/28/2026",
+    "timestamp": "2026-05-28T11:23:57.946Z",
+    "entry": "Spent the afternoon refactoring my expense tracker and fixing array ID collision bugs."
+  },
+  {
+    "id": 4,
+    "date": "5/28/2026",
+    "timestamp": "2026-05-28T12:08:18.789Z",
+    "entry": "new added entry after delete a entry"
+  }
+]
