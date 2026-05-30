@@ -1,10 +1,6 @@
 const fs = require("fs"); // File system module for reading and writing files
 
 const command = process.argv[2]; // Get the command (add or view)
-const sentence = process.argv[4]; // Get the diary entry text
-const keyword = process.argv[4]; // Get the search keyword
-const id = parseInt(process.argv[4], 10); // Get the entry ID for updating an entry, parsed as an integer
-const newEntry = process.argv[6]; // Get the new entry text for updating an entry
 /**
  * Adds a new diary entry to the diary file with a unique ID, date, and timestamp.
  * The function checks for existing entries to ensure that each new entry has a unique ID by finding
@@ -216,38 +212,48 @@ const helpMessage = `Usage:
  * @returns {void}
  */
 if (command === "add") {
-  // Check if the diary entry text is provided; if not, display a message and exit
-  if (!sentence) {
+  // Check if the --entry flag is provided with a value
+  if (process.argv.length < 5 || process.argv[3] !== "--entry") {
     console.log("Please provide a diary entry text using the --entry flag.");
     process.exit(1); // Exit the process with a non-zero status code to indicate an error
   }
+  const sentence = process.argv.slice(4).join(" "); // Get the diary entry text
+  console.log(`Adding diary entry: ${sentence}`); // Log a message indicating that a new diary entry is being added
   addDiaryEntry(sentence); // Call the function to add a new diary entry with the provided text
 } else if (command === "view") {
   viewDiaryEntries(); // Call the function to view all diary entries
 } else if (command === "search") {
   // Check if the search keyword is provided; if not, display a message and exit
-  if (!keyword) {
+  if (process.argv.length < 5 || process.argv[3] !== "--keyword") {
     console.log("Please provide a search keyword using the --keyword flag.");
     process.exit(1);
   }
+  const keyword = process.argv[4]; // Get the search keyword
   searchDiaryEntries(keyword); // Call the function to search for diary entries containing the provided keyword
 } else if (command === "help") {
   console.log(helpMessage);
 } else if (command === "update") {
   // Check if the entry ID and new entry text are provided; if not, display a message and exit
-  if (!id || !newEntry) {
+  if (
+    process.argv.length < 7 ||
+    process.argv[3] !== "--id" ||
+    process.argv[5] !== "--entry"
+  ) {
     console.log(
       "Please provide an entry ID and updated diary entry text using the --id and --entry flags.",
     );
     process.exit(1);
   }
+  const id = parseInt(process.argv[4], 10); // Get the entry ID for updating an entry, parsed as an integer
+  const newEntry = process.argv[6]; // Get the new entry text for updating an entry
   updateDiaryEntry(id, newEntry); // Call the function to update the specified diary entry
 } else if (command === "delete") {
   // Check if the entry ID is provided; if not, display a message and exit
-  if (!id) {
+  if (process.argv.length < 5 || process.argv[3] !== "--id") {
     console.log("Please provide an entry ID using the --id flag.");
     process.exit(1);
   }
+  const id = parseInt(process.argv[4], 10); // Get the entry ID for updating an entry, parsed as an integer
   deleteDiaryEntry(id); // Call the function to delete the specified diary entry
 } else {
   console.log("Invalid command. Use 'add' to add a new diary entry.");
