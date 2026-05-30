@@ -228,7 +228,7 @@ if (command === "add") {
     console.log("Please provide a search keyword using the --keyword flag.");
     process.exit(1);
   }
-  const keyword = process.argv[4]; // Get the search keyword
+  const keyword = process.argv.slice(4).join(" "); // Get the search keyword
   searchDiaryEntries(keyword); // Call the function to search for diary entries containing the provided keyword
 } else if (command === "help") {
   console.log(helpMessage);
@@ -245,7 +245,7 @@ if (command === "add") {
     process.exit(1);
   }
   const id = parseInt(process.argv[4], 10); // Get the entry ID for updating an entry, parsed as an integer
-  const newEntry = process.argv[6]; // Get the new entry text for updating an entry
+  const newEntry = process.argv.slice(6).join(" "); // Get the new entry text for updating an entry
   updateDiaryEntry(id, newEntry); // Call the function to update the specified diary entry
 } else if (command === "delete") {
   // Check if the entry ID is provided; if not, display a message and exit
